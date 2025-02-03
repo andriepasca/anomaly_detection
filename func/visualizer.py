@@ -29,7 +29,7 @@ def plot_anomalies(df, y_column, anomaly_type):
 
     figure.add_trace(go.Scatter(name=config['legend_name'], x = anomaly_df.index, y=anomaly_df[y_column],
         mode='markers',
-        marker=dict(color=config['color'],size=10)))
+        marker=dict(color=config['color'],size=4)))
 
     figure.update_layout(
             xaxis_title='date',
@@ -52,7 +52,7 @@ def plot(df, y_column, configs):
             },
             'style':{
                 'color': 'rgba(249,123,34,0.8)',
-                'marker_size': 10
+                'marker_size': 4
             }
         },
         {
@@ -64,7 +64,7 @@ def plot(df, y_column, configs):
             },
             'style':{
                 'color': 'rgba(255,217,61,0.8)',
-                'marker_size': 10
+                'marker_size': 4
             }
         },
         {
@@ -75,7 +75,7 @@ def plot(df, y_column, configs):
             },
             'style':{
                 'color': 'rgba(223,46,56,0.8)',
-                'marker_size': 10
+                'marker_size': 4
             }
         },
     ]
@@ -90,7 +90,7 @@ def plot(df, y_column, configs):
 
         figure.add_trace(go.Scatter(name=config['legend_name'], x = anomaly_df.index, y=anomaly_df[y_column],
             mode='markers',
-            marker=dict(color=config['style']['color'],size=10)))
+            marker=dict(color=config['style']['color'],size=4)))
 
         figure.update_layout(
             title= 'DAU (simulated)',
