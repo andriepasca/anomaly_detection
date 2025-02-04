@@ -37,34 +37,33 @@ st.write("You selected column :", y_column, '. Years : ', year)
 if year != 'All':
     df = df[df.index.year == year]
 
-if st.button('Use Selection'):
-    st.subheader('Selected DataFrame')
-    st.dataframe(df[y_column], use_container_width=True)
+st.subheader('Selected DataFrame')
+st.dataframe(df[y_column], use_container_width=True)
 
-    st.subheader('Base Plot')
-    with st.status("Generating graph...", expanded=True) as status:
-        base_plot = plot_base_line(df, y_column)
-        st.write(base_plot)
-        status.update(
-            label="Graph complete!", state="complete", expanded=True
-        )
+st.subheader('Base Plot')
+with st.status("Generating graph...", expanded=True) as status:
+    base_plot = plot_base_line(df, y_column)
+    st.write(base_plot)
+    status.update(
+        label="Graph complete!", state="complete", expanded=True
+    )
 
-    st.subheader('Level Shift Anomaly')
-    level_anomalies = level_shift_anomaly(df[y_column])
-    df_level_anomalies = _join_df_with_anomaly(df, level_anomalies, anomaly_type='levelshift')
-    with st.status("Generating graph...", expanded=True) as status:
-        level_anomalies_plot = plot_anomalies(df_level_anomalies, y_column, anomaly_type='levelshift')
-        st.write(level_anomalies_plot)
-        status.update(
-            label="Graph complete!", state="complete", expanded=True
-        )
+st.subheader('Level Shift Anomaly')
+level_anomalies = level_shift_anomaly(df[y_column])
+df_level_anomalies = _join_df_with_anomaly(df, level_anomalies, anomaly_type='levelshift')
+with st.status("Generating graph...", expanded=True) as status:
+    level_anomalies_plot = plot_anomalies(df_level_anomalies, y_column, anomaly_type='levelshift')
+    st.write(level_anomalies_plot)
+    status.update(
+        label="Graph complete!", state="complete", expanded=True
+    )
 
-    st.subheader('Isolation Forest Anomaly')
-    isolation_anomalies = isolation_forest(df[[y_column]])
-    df_isolation_anomalies = _join_df_with_anomaly(df, isolation_anomalies, anomaly_type='isolationforest')
-    with st.status("Generating graph...", expanded=True) as status:
-        isolation_anomalies_plot = plot_anomalies(df_isolation_anomalies, y_column, anomaly_type='isolationforest')
-        st.write(isolation_anomalies_plot)
-        status.update(
-            label="Graph complete!", state="complete", expanded=True
-        )
+st.subheader('Isolation Forest Anomaly')
+isolation_anomalies = isolation_forest(df[[y_column]])
+df_isolation_anomalies = _join_df_with_anomaly(df, isolation_anomalies, anomaly_type='isolationforest')
+with st.status("Generating graph...", expanded=True) as status:
+    isolation_anomalies_plot = plot_anomalies(df_isolation_anomalies, y_column, anomaly_type='isolationforest')
+    st.write(isolation_anomalies_plot)
+    status.update(
+        label="Graph complete!", state="complete", expanded=True
+    )
