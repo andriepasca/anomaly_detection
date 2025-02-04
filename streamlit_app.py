@@ -1,10 +1,10 @@
 import streamlit as st
 from func.data_loader import data_load, df_load
-from func.anomaly_detector import level_shift_anomaly, _join_df_with_anomaly, isolation_forest
+from func.anomaly_detector import seasonal_anomaly, _join_df_with_anomaly, isolation_forest
 from func.visualizer import plot_base_line, plot_anomalies
 
 st.title('Anomaly Detection on Energy Dataset')
-st.write('This is an experimental project for anomaly detection using energy consumption dataset. Two anomaly detection methods (adtk and isolation forest) were used in this project.')
+st.write('This is an experimental project for anomaly detection using energy consumption and generation dataset. Two anomaly detection methods (adtk and isolation forest) were used in this project.')
 st.write('The dataset source: https://data.open-power-system-data.org/time_series/')
 
 st.subheader('Data Preview')
@@ -48,20 +48,20 @@ with st.status("Generating graph...", expanded=True) as status:
         label="Graph complete!", state="complete", expanded=True
     )
 
-st.subheader('Level Shift Anomaly')
-level_anomalies = level_shift_anomaly(df[y_column])
-df_level_anomalies = _join_df_with_anomaly(df, level_anomalies, anomaly_type='levelshift')
+st.subheader('Seasonal Anomaly')
 with st.status("Generating graph...", expanded=True) as status:
-    level_anomalies_plot = plot_anomalies(df_level_anomalies, y_column, anomaly_type='levelshift')
-    st.write(level_anomalies_plot)
+    seasonal_anomalies = seasonal_anomaly(df[y_column])
+    df_level_anomalies = _join_df_with_anomaly(df, seasonal_anomalies, anomaly_type='seasonal')
+    seasonal_anomalies_plot = plot_anomalies(df_level_anomalies, y_column, anomaly_type='seasonal')
+    st.write(seasonal_anomalies_plot)
     status.update(
         label="Graph complete!", state="complete", expanded=True
     )
 
 st.subheader('Isolation Forest Anomaly')
-isolation_anomalies = isolation_forest(df[[y_column]])
-df_isolation_anomalies = _join_df_with_anomaly(df, isolation_anomalies, anomaly_type='isolationforest')
 with st.status("Generating graph...", expanded=True) as status:
+    isolation_anomalies = isolation_forest(df[[y_column]])
+    df_isolation_anomalies = _join_df_with_anomaly(df, isolation_anomalies, anomaly_type='isolationforest')
     isolation_anomalies_plot = plot_anomalies(df_isolation_anomalies, y_column, anomaly_type='isolationforest')
     st.write(isolation_anomalies_plot)
     status.update(
