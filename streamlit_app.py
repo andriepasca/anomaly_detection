@@ -31,7 +31,7 @@ unique_years = ['All']
 unique_years.extend(list(df.index.year.unique()))
 year = col2.selectbox(
     "select a column for years ",
-    unique_years,
+    unique_years, index=len(unique_years)-1
 )
 st.write("You selected column :", y_column, '. Years : ', year)
 if year != 'All':
