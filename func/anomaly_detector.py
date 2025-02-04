@@ -1,14 +1,14 @@
 import pandas as pd
 from adtk.data import validate_series
-from adtk.detector import LevelShiftAD
+from adtk.detector import SeasonalAD
 from sklearn.ensemble import IsolationForest
 import warnings
 warnings.simplefilter(action="ignore", category=UserWarning)
 
 
-def level_shift_anomaly(series,config={'c':1,'side':'both','window':3}):
+def seasonal_anomaly(series,config={'c':1,'side':'both','window':3}):
     s = validate_series(series)
-    model = LevelShiftAD(c=config['c'], side=config['side'],window = config['window'])
+    model = SeasonalAD(c=config['c'], side=config['side'])
     anomalies = model.fit_detect(s)
     return anomalies
 
@@ -17,10 +17,10 @@ def _join_df_with_anomaly(df, anomalies, anomaly_type):
     anomalies.fillna(False, inplace=True)
     anomalies.reset_index(drop=True)
 
-    if anomaly_type == 'levelshift':
+    if anomaly_type == 'seasonal':
         config={
-            'anomaly_column':'levelshift_ad',
-            'legend_name': 'levelshift anomaly',
+            'anomaly_column':'seasonal_ad',
+            'legend_name': 'seasonal anomaly',
             'color':'rgba(249,123,34,0.8)'
         }
     else:
