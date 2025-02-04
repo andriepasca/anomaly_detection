@@ -49,19 +49,27 @@ with st.status("Generating graph...", expanded=True) as status:
     )
 
 st.subheader('Seasonal Anomaly')
-with st.status("Generating graph...", expanded=True) as status:
+with st.status('Detecting Anomaly...', expanded=True) as status:
     seasonal_anomalies = seasonal_anomaly(df[y_column])
-    df_level_anomalies = _join_df_with_anomaly(df, seasonal_anomalies, anomaly_type='seasonal')
-    seasonal_anomalies_plot = plot_anomalies(df_level_anomalies, y_column, anomaly_type='seasonal')
+    df_seasonal_anomalies = _join_df_with_anomaly(df, seasonal_anomalies, anomaly_type='seasonal')
+    status.update(
+        label="Detection complete!", state="complete", expanded=True
+    )
+with st.status("Generating graph...", expanded=True) as status:
+    seasonal_anomalies_plot = plot_anomalies(df_seasonal_anomalies, y_column, anomaly_type='seasonal')
     st.write(seasonal_anomalies_plot)
     status.update(
         label="Graph complete!", state="complete", expanded=True
     )
 
 st.subheader('Isolation Forest Anomaly')
-with st.status("Generating graph...", expanded=True) as status:
+with st.status('Detecting Anomaly...', expanded=True) as status:
     isolation_anomalies = isolation_forest(df[[y_column]])
     df_isolation_anomalies = _join_df_with_anomaly(df, isolation_anomalies, anomaly_type='isolationforest')
+    status.update(
+        label="Detection complete!", state="complete", expanded=True
+    )
+with st.status("Generating graph...", expanded=True) as status:
     isolation_anomalies_plot = plot_anomalies(df_isolation_anomalies, y_column, anomaly_type='isolationforest')
     st.write(isolation_anomalies_plot)
     status.update(
