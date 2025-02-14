@@ -12,23 +12,10 @@ def seasonal_anomaly(series,config={'c':1,'side':'both','window':3}):
     anomalies = model.fit_detect(s)
     return anomalies
 
-def _join_df_with_anomaly(df, anomalies, anomaly_type):
+def _join_df_with_anomaly(df, anomalies, config):
     anomalies = pd.DataFrame(anomalies)
     anomalies.fillna(False, inplace=True)
     anomalies.reset_index(drop=True)
-
-    if anomaly_type == 'seasonal':
-        config={
-            'anomaly_column':'seasonal_ad',
-            'legend_name': 'seasonal anomaly',
-            'color':'rgba(249,123,34,0.8)'
-        }
-    else:
-        config={
-            'anomaly_column':'isolation_ad',
-            'legend_name': 'collective anomaly',
-            'color':'rgba(255,217,61,0.8)'
-        }
     
     anomaly_column = config['anomaly_column']
     df[anomaly_column]=anomalies.to_numpy()
