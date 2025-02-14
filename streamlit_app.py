@@ -79,7 +79,7 @@ if 'data' in st.session_state:
         'Monthly': 'M'
     }
     interval = col1.selectbox(
-        "select interval ",
+        "select frequency",
         interval_dict.keys(), index=len(interval_dict)-1
     )
     st.write("You selected column :", y_column, '. Year : ', start_year, ' to ', end_year, '. Interval : ', interval)
