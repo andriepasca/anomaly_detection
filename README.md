@@ -1,1 +1,1 @@
-Preview the app via: https://anomaly-energy-data.streamlit.app/
+Preview the app via: https://anomaly-checker.streamlit.app/
